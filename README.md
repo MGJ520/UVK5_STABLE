@@ -1,16 +1,6 @@
-
-
 # [K5Web]( https://k5.vicicode.com/)
-* 支持在线固件功能编译，无需安装编译环境！！
-* 多普勒卫星、开机图片文字、SI4732 SSB补丁的写频方式！
-* 支持**创意工坊**，注册后登录可上传自定义固件和开机图片！！！
+* 支持在线固件功能编译，无需安装编译环境
 
-请访问：[K5Web]( https://k5.vicicode.com/)
-
-# [自定义引导](https://github.com/losehu/uv-k5-bootloader-custom)
-* 通过创立一个引导程序加载进RAM实现固件切换
-* 可切换任意固件
-* 目前仅适用于4Mib的Eeprom，通过修改代码可轻松拓展至其他大小Eeprom
 
 # 版本说明
 
@@ -199,19 +189,3 @@
 | ENABLE_SWD                             | 使用CPU的SWD端口，调试/编程时需要                                                          |
 | ENABLE_OVERLAY                         | CPU FLASH相关内容，不需要                                                             |
 | ENABLE_LTO                             | 减小编译固件的大小，但可能会破坏EEPROM读取（启用后OVERLAY将被禁用）                                      |
-
-# 打赏
-
-如果这个项目对您有帮助,可以考虑赞助来支持开发工作。
-
-这是：[打赏名单](https://losehu.github.io/payment-codes/#%E6%94%B6%E6%AC%BE%E7%A0%81) 非常感谢各位的支持！！！
-
-打赏码：
-
-[![打赏码](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/payment/show.png)](https://losehu.github.io/payment-codes/)
-
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=losehu/uv-k5-firmware-custom&type=Date)](https://star-history.com/#losehu/uv-k5-firmware-custom&Date)
-
