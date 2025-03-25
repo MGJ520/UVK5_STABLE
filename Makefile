@@ -1,0 +1,764 @@
+
+# compile options (see README.md for descriptions)
+# 0 = disable
+# 1 = enable
+
+
+# ---- COMPILER/LINKER OPTIONS ----
+# 使用clang编译器而非gcc，实验性质，如果启用此选项，LTO将被禁用
+ENABLE_CLANG                  ?= 0
+# 使用CPU的SWD端口，用于调试/编程
+ENABLE_SWD                    ?= 0
+# CPU FLASH相关内容，通常不需要
+ENABLE_OVERLAY                ?= 0
+# 启用链接时间优化，减小编译固件的大小，但可能会破坏EEPROM读取
+ENABLE_LTO                    ?= 1
+
+#-----------------------原厂功能------------------------------------
+# 启用串口，用于通过PC配置
+ENABLE_UART                   ?= 1
+# 启用AirCopy无线复制功能
+ENABLE_AIRCOPY                ?= 0
+# 启用收音机功能
+ENABLE_FMRADIO                ?= 1
+# 启用NOAA功能，主要用于美国
+ENABLE_NOAA                   ?= 0
+# 启用语音播报功能
+ENABLE_VOICE                  ?= 0
+# 启用VOX声控发射功能
+ENABLE_VOX                    ?= 1
+# 启用TX警报功能
+ENABLE_ALARM                  ?= 0
+# 启用DTMF拨号功能，支持呼叫发起，接收，群组通话，联系人列表等
+ENABLE_DTMF_CALLING           ?= 1
+# 启用顶部手电筒LED灯功能
+ENABLE_FLASHLIGHT             ?= 1
+# 默认语音条样式
+ENABLE_AUDIO_BAR_DEFAULT      ?= 0
+
+#-------------------------扩展功能----------------------------------
+# 启用频谱分析仪功能
+ENABLE_SPECTRUM               ?= 1
+
+# 启用MDC1200
+ENABLE_MDC1200                ?= 1
+# 启用MDC显示首尾音参数(注释了莫要作用)
+ENABLE_MDC1200_SHOW_OP_ARG    ?= 1
+# 启用MDC侧音
+ENABLE_MDC1200_SIDE_BEEP      ?= 0
+# 启用MDC联系人功能
+ENABLE_MDC1200_CONTACT        ?= 1
+# 启用MDC编辑功能
+ENABLE_MDC1200_EDIT			  ?= 0
+
+# 启用频率扫描的扫描范围模式
+ENABLE_SCAN_RANGES            ?= 1
+
+# 启用发送和接收短文本消息功能
+ENABLE_MESSENGER              		   ?= 0
+# 启用接收消息时向发送方发送通知的功能
+ENABLE_MESSENGER_DELIVERY_NOTIFICATION ?= 0
+# 启用收到消息时播放声音的功能
+ENABLE_MESSENGER_NOTIFICATION		   ?= 0
+
+# 启用自定义侧键功能
+ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1
+
+# 启用自定义侧键发射功能
+ENABLE_SIDEFUNCTIONS_SEND     ?= 1
+
+# 启用拼音功能
+ENABLE_PINYIN 				  ?= 0
+
+# 启用英文功能
+ENABLE_ENGLISH				  ?= 0
+# 启用全中文功能
+ENABLE_CHINESE_FULL 	      ?= 0
+
+# 启用DOCK功能，允许通过电脑控制手台，无屏幕显示
+ENABLE_DOCK 		          ?= 0
+
+# 启用4732功能
+ENABLE_4732                   ?= 0
+# 启用4732SSB功能
+ENABLE_4732SSB                ?= 0
+# 多普勒功能
+ENABLE_DOPPLER                ?= 0
+
+# 启用引导加载程序功能
+ENABLE_BOOTLOADER			  ?= 0
+
+#-----------------------扩展选项------------------------------------
+# 启用全频18MHz至1300MHz接收
+ENABLE_WIDE_RX                ?= 1
+# 启用警告提示音
+ENABLE_WARNING 				  ?= 1
+# 启用大号字体显示频率
+ENABLE_BIG_FREQ               ?= 1
+# 启动音
+ENABLE_BOOT_BEEPS             ?= 0
+# 充电时显示电池充电水平
+ENABLE_SHOW_CHARGE_LEVEL      ?= 0
+# 在状态栏上镜像电池符号（正极在右侧）
+ENABLE_REVERSE_BAT_SYMBOL     ?= 0
+# 当RX设置为AM时允许TX（通常为FM）
+ENABLE_TX_WHEN_AM             ?= 1
+# 禁用32秒CTCSS/DCS扫描超时
+ENABLE_NO_CODE_SCAN_TIMEOUT   ?= 1
+# 在AM模式下动态调整前端增益，防止AM解调器饱和
+ENABLE_AM_FIX                 ?= 1
+# 将静噪电平调得稍微敏感一些（建议开启）
+ENABLE_SQUELCH_MORE_SENSITIVE ?= 1
+# 增加频道扫描速度
+ENABLE_FASTER_CHANNEL_SCAN    ?= 1
+# 启用以dBm/Sn为单位的RSSI条形图水平，取代小天线符号
+ENABLE_RSSI_BAR               ?= 1
+# 启用将当前频道设置复制到频率模式的功能
+ENABLE_COPY_CHAN_TO_VFO       ?= 0
+# 保存内存频道时保持频道名称
+ENABLE_KEEP_MEM_NAME          ?= 1
+# 使中等和低功率设置更低
+ENABLE_REDUCE_LOW_MID_TX_POWER ?= 0
+# 启用额外的BYP（旁路）和RAW解调选项
+ENABLE_BYP_RAW_DEMODULATORS   ?= 1
+# 启用以读写BK4819寄存器的额外命令
+ENABLE_UART_RW_BK_REGS 		  ?= 0
+# 使用标准CTCSS尾部相移，而不是QS独有的55Hz音调方法
+ENABLE_CTCSS_TAIL_PHASE_SHIFT ?= 0
+# 启用EEPROM上锁功能
+ENABLE_BLOCK                  ?= 0
+
+
+#-------------------------实验功能----------------------------------
+# 启用收音机的隐藏频率校准菜单
+ENABLE_F_CAL_MENU                      ?= 0
+# 启用EEPROM类型功能(默认0是 没有扩容 正常机器)
+ENABLE_EEPROM_TYPE        	           ?= 0
+# 显示AM修复的调试数据
+ENABLE_AM_FIX_SHOW_DATA                ?= 0
+# 显示ACG参数
+ENABLE_AGC_SHOW_DATA                   ?= 0
+# 启用定时器功能
+ENABLE_TIMER		                   ?= 0
+# 启用TURN功能，按键方向，已经修改，没有用了
+ENABLE_TURN                            ?= 0
+
+#############################################################
+# 包名
+PACKED_FILE_SUFFIX              = STABLE-2.2.2
+# 签名
+AUTHOR_STRING                   = Office
+#############################################################
+
+
+ifeq ($(ENABLE_PINYIN),1)
+	ENABLE_CHINESE_FULL=4
+endif
+
+ifeq ($(ENABLE_DOPPLER),1)
+	ENABLE_SPECTRUM=1
+endif
+
+ifeq ($(ENABLE_CHINESE_FULL),0)
+    ifeq ($(ENABLE_ENGLISH),1)
+        $(info E)
+        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)E
+    endif
+endif
+
+ifeq ($(ENABLE_CHINESE_FULL),4)
+
+    ifeq ($(ENABLE_ENGLISH),1)
+        $(info EK)
+        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)EK
+    else ifeq ($(ENABLE_PINYIN),1)
+        $(info H)
+        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)H
+    else
+        $(info K)
+        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)K
+    endif
+endif
+
+ifeq ($(ENABLE_4732),1)
+	ENABLE_FMRADIO=0
+	PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)S
+    $(info SI4732)
+
+endif
+
+ifeq ($(ENABLE_FMRADIO),1)
+	ENABLE_4732=0
+endif
+
+
+CFLAGS =
+
+
+ifeq ($(ENABLE_MDC1200),0)
+	ENABLE_MDC1200_SHOW_OP_ARG    = 0
+	ENABLE_MDC1200_SIDE_BEEP      = 0
+	ENABLE_MDC1200_CONTACT        = 0
+	ENABLE_MDC1200_EDIT			  = 0
+endif
+
+
+
+
+#OPENOCD = openocd-win/bin/openocd.exe
+
+TARGET = firmware
+
+ifeq ($(ENABLE_CLANG),1)
+	# GCC's linker, ld, doesn't understand LLVM's generated bytecode
+	ENABLE_LTO := 0
+endif
+
+ifeq ($(ENABLE_LTO),1)
+	# can't have LTO and OVERLAY enabled at same time
+	ENABLE_OVERLAY := 0
+endif
+
+BSP_DEFINITIONS := $(wildcard hardware/*/*.def)
+BSP_HEADERS     := $(patsubst hardware/%,bsp/%,$(BSP_DEFINITIONS))
+BSP_HEADERS     := $(patsubst %.def,%.h,$(BSP_HEADERS))
+
+OBJS =
+# Startup files
+OBJS += start.o
+OBJS += init.o
+OBJS += app/messenger.o
+
+ifeq ($(ENABLE_MESSENGER),1)
+	OBJS += ui/messenger.o
+endif
+
+
+
+
+ifeq ($(ENABLE_OVERLAY),1)
+	OBJS += sram-overlay.o
+endif
+OBJS += external/printf/printf.o
+ifeq ($(ENABLE_TIMER),1)
+    OBJS += driver/rtc.o
+endif
+ifeq ($(ENABLE_DOPPLER),1)
+    OBJS += driver/rtc.o
+endif
+
+ifeq ($(ENABLE_MDC1200),1)
+    OBJS += app/mdc1200.o
+endif
+ifeq ($(ENABLE_DOPPLER),1)
+    OBJS += app/doppler.o
+endif
+
+
+# Drivers
+OBJS += driver/adc.o
+ifeq ($(ENABLE_UART),1)
+	OBJS += driver/aes.o
+endif
+OBJS += driver/backlight.o
+ifeq ($(ENABLE_FMRADIO),1)
+	OBJS += driver/bk1080.o
+endif
+OBJS += driver/bk4819.o
+ifeq ($(filter $(ENABLE_AIRCOPY) $(ENABLE_UART),1),1)
+	OBJS += driver/crc.o
+endif
+OBJS += driver/eeprom.o
+ifeq ($(ENABLE_OVERLAY),1)
+	OBJS += driver/flash.o
+endif
+ifeq ($(ENABLE_4732),1)
+        OBJS += app/si.o
+        OBJS += driver/si473x.o
+        OBJS += helper/rds.o
+        OBJS += app/spectrum.o
+endif
+OBJS += driver/gpio.o
+OBJS += driver/i2c.o
+OBJS += driver/keyboard.o
+OBJS += driver/spi.o
+OBJS += driver/st7565.o
+OBJS += driver/system.o
+OBJS += driver/systick.o
+ifeq ($(ENABLE_UART),1)
+	OBJS += driver/uart.o
+endif
+
+
+# Main
+OBJS += app/action.o
+ifeq ($(ENABLE_AIRCOPY),1)
+	OBJS += app/aircopy.o
+endif
+OBJS += app/app.o
+OBJS += app/chFrScanner.o
+OBJS += app/common.o
+OBJS += app/dtmf.o
+ifeq ($(ENABLE_FLASHLIGHT),1)
+	OBJS += app/flashlight.o
+endif
+ifeq ($(ENABLE_FMRADIO),1)
+	OBJS += app/fm.o
+endif
+OBJS += app/generic.o
+OBJS += app/main.o
+OBJS += app/menu.o
+ifeq ($(ENABLE_SPECTRUM), 1)
+OBJS += app/spectrum.o
+endif
+OBJS += app/scanner.o
+ifeq ($(ENABLE_UART),1)
+	OBJS += app/uart.o
+endif
+ifeq ($(ENABLE_AM_FIX), 1)
+	OBJS += am_fix.o
+endif
+OBJS += audio.o
+OBJS += bitmaps.o
+OBJS += board.o
+OBJS += dcs.o
+OBJS += font.o
+OBJS += frequencies.o
+OBJS += functions.o
+OBJS += helper/battery.o
+OBJS += helper/boot.o
+OBJS += misc.o
+OBJS += radio.o
+OBJS += scheduler.o
+OBJS += settings.o
+ifeq ($(ENABLE_AIRCOPY),1)
+	OBJS += ui/aircopy.o
+endif
+OBJS += ui/battery.o
+ifeq ($(ENABLE_FMRADIO),1)
+	OBJS += ui/fmradio.o
+endif
+OBJS += ui/helper.o
+OBJS += ui/inputbox.o
+OBJS += ui/main.o
+OBJS += ui/menu.o
+OBJS += ui/scanner.o
+OBJS += ui/status.o
+OBJS += ui/ui.o
+OBJS += ui/welcome.o
+OBJS += version.o
+OBJS += main.o
+
+
+
+ifeq ($(OS), Windows_NT) # windows
+    TOP := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+    RM = del /Q
+    FixPath = $(subst /,\,$1)
+    WHERE = where
+    NULL_OUTPUT = nul
+else # unix
+    TOP := $(shell pwd)
+    RM = rm -f
+    FixPath = $1
+    WHERE = which
+    NULL_OUTPUT = /dev/null
+endif
+
+
+AS = arm-none-eabi-gcc
+LD = arm-none-eabi-gcc
+
+ifeq ($(ENABLE_CLANG),0)
+	CC = arm-none-eabi-gcc
+# Use GCC's linker to avoid undefined symbol errors
+#	LD += arm-none-eabi-gcc
+else
+#	May need to adjust this to match your system
+	CC = clang --sysroot=/usr/arm-none-eabi --target=arm-none-eabi
+#	Bloats binaries to 512MB
+#	LD = ld.lld
+endif
+
+OBJCOPY = arm-none-eabi-objcopy
+SIZE = arm-none-eabi-size
+
+
+## the user might not have/want git installed
+## can set own version string here (max 7 chars)
+#ifneq (, $(shell $(WHERE) git))
+#	VERSION_STRING ?= $(shell git describe --tags --exact-match 2>$(NULL_OUTPUT))
+#	ifeq (, $(VERSION_STRING))
+#    	VERSION_STRING := $(shell git rev-parse --short HEAD)
+#	endif
+#endif
+## If there is still no VERSION_STRING we need to make one.
+## It is needed for the firmware packing script
+#ifeq (, $(VERSION_STRING))
+#	VERSION_STRING := NOGIT
+#endif
+##VERSION_STRING := 230930b
+
+
+ASFLAGS = -c -mcpu=cortex-m0
+ifeq ($(ENABLE_OVERLAY),1)
+	ASFLAGS += -DENABLE_OVERLAY
+endif
+
+ifeq ($(ENABLE_CLANG),0)
+	CFLAGS += -Os -Wall -Wno-error -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c2x -MMD -w
+	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c11 -MMD
+	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c99 -MMD
+	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=gnu99 -MMD
+	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=gnu11 -MMD
+else
+	# Oz needed to make it fit on flash
+	CFLAGS += -Oz -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c2x -MMD
+endif
+
+ifeq ($(ENABLE_LTO),1)
+	CFLAGS += -flto=auto
+else
+	# We get most of the space savings if LTO creates problems
+	CFLAGS += -ffunction-sections -fdata-sections
+endif
+
+# May cause unhelpful build failures
+#CFLAGS += -Wpadded
+
+# catch any and all warnings
+CFLAGS += -Wextra
+#CFLAGS += -Wpedantic
+
+# 设置PACKED_FILE_SUFFIX，根据ENABLE_CHINESE_FULL的值设置不同的后缀
+
+CFLAGS += -DENABLE_EEPROM_TYPE=$(ENABLE_EEPROM_TYPE)
+
+CFLAGS += -DENABLE_CHINESE_FULL=$(ENABLE_CHINESE_FULL)
+CFLAGS += -DPACKED_FILE_SUFFIX=\"$(PACKED_FILE_SUFFIX)\"
+CFLAGS += -DPRINTF_INCLUDE_CONFIG_H
+CFLAGS += -DAUTHOR_STRING=\"$(AUTHOR_STRING)\" -DVERSION_STRING=\"$(VERSION_STRING)\"
+
+
+
+
+ifeq ($(ENABLE_MDC1200_EDIT),1)
+CFLAGS += -DENABLE_MDC1200_EDIT
+endif
+ifeq ($(ENABLE_SPECTRUM),1)
+CFLAGS += -DENABLE_SPECTRUM
+endif
+ifeq ($(ENABLE_MDC1200),1)
+    CFLAGS  += -DENABLE_MDC1200
+endif
+ifeq ($(ENABLE_BOOTLOADER),1)
+    CFLAGS  += -DENABLE_BOOTLOADER
+endif
+
+ifeq ($(ENABLE_WARNING),1)
+    CFLAGS  += -DENABLE_WARNING
+endif
+
+ifeq ($(ENABLE_DOCK),1)
+    CFLAGS  += -DENABLE_DOCK
+endif
+ifeq ($(ENABLE_ENGLISH),1)
+    CFLAGS  += -DENABLE_ENGLISH
+endif
+
+ifeq ($(ENABLE_PINYIN),1)
+	CFLAGS += -DENABLE_PINYIN
+endif
+ifeq ($(ENABLE_TURN),1)
+	CFLAGS += -DENABLE_TURN
+endif
+
+ifeq ($(ENABLE_BLOCK),1)
+	CFLAGS += -DENABLE_BLOCK
+endif
+ifeq ($(ENABLE_MESSENGER),1)
+	CFLAGS  += -DENABLE_MESSENGER
+endif
+ifeq ($(ENABLE_DOPPLER),1)
+	CFLAGS  += -DENABLE_DOPPLER
+endif
+ifeq ($(ENABLE_4732),1)
+	CFLAGS  += -DENABLE_4732
+endif
+ifeq ($(ENABLE_4732SSB),1)
+	CFLAGS  += -DENABLE_4732SSB
+endif
+ifeq ($(ENABLE_MESSENGER_DELIVERY_NOTIFICATION),1)
+	CFLAGS += -DENABLE_MESSENGER_DELIVERY_NOTIFICATION
+endif
+ifeq ($(ENABLE_MESSENGER_NOTIFICATION),1)
+	CFLAGS += -DENABLE_MESSENGER_NOTIFICATION
+endif
+#ifeq ($(ENABLE_CHINESE_FULL),4)
+ifeq ($(ENABLE_CUSTOM_SIDEFUNCTIONS),1)
+    CFLAGS  += -DENABLE_CUSTOM_SIDEFUNCTIONS
+endif
+ifeq ($(ENABLE_SIDEFUNCTIONS_SEND),1)
+    CFLAGS  += -DENABLE_SIDEFUNCTIONS_SEND
+endif
+#endif
+
+ifeq ($(ENABLE_TIMER),1)
+    CFLAGS  += -DENABLE_TIMER
+endif
+
+
+ifeq ($(ENABLE_MDC1200_CONTACT),1)
+    CFLAGS  += -DENABLE_MDC1200_CONTACT
+endif
+ifeq ($(ENABLE_AUDIO_BAR_DEFAULT),1)
+    CFLAGS  += -DENABLE_AUDIO_BAR_DEFAULT
+endif
+ifeq ($(ENABLE_CHINESE_FULL),4)
+
+ifeq ($(ENABLE_EEPROM_4M),1)
+    CFLAGS  += -DENABLE_EEPROM_4M
+endif
+endif
+
+ifeq ($(ENABLE_MDC1200_SHOW_OP_ARG),1)
+    CFLAGS  += -DENABLE_MDC1200_SHOW_OP_ARG
+endif
+ifeq ($(ENABLE_MDC1200_SIDE_BEEP),1)
+    CFLAGS  += -DENABLE_MDC1200_SIDE_BEEP
+endif
+
+ifeq ($(ENABLE_SWD),1)
+	CFLAGS += -DENABLE_SWD
+endif
+ifeq ($(ENABLE_OVERLAY),1)
+	CFLAGS += -DENABLE_OVERLAY
+endif
+ifeq ($(ENABLE_AIRCOPY),1)
+	CFLAGS += -DENABLE_AIRCOPY
+endif
+ifeq ($(ENABLE_FMRADIO),1)
+	CFLAGS += -DENABLE_FMRADIO
+endif
+ifeq ($(ENABLE_UART),1)
+	CFLAGS += -DENABLE_UART
+endif
+ifeq ($(ENABLE_UART_RW_BK_REGS),1)
+	CFLAGS  += -DENABLE_UART_RW_BK_REGS
+endif
+ifeq ($(ENABLE_BIG_FREQ),1)
+	CFLAGS  += -DENABLE_BIG_FREQ
+endif
+
+ifeq ($(ENABLE_NOAA),1)
+	CFLAGS  += -DENABLE_NOAA
+endif
+ifeq ($(ENABLE_VOICE),1)
+	CFLAGS  += -DENABLE_VOICE
+endif
+ifeq ($(ENABLE_VOX),1)
+	CFLAGS  += -DENABLE_VOX
+endif
+ifeq ($(ENABLE_ALARM),1)
+	CFLAGS  += -DENABLE_ALARM
+endif
+ifeq ($(ENABLE_TX1750),1)
+	CFLAGS  += -DENABLE_TX1750
+endif
+ifeq ($(ENABLE_KEEP_MEM_NAME),1)
+	CFLAGS  += -DENABLE_KEEP_MEM_NAME
+endif
+ifeq ($(ENABLE_WIDE_RX),1)
+	CFLAGS  += -DENABLE_WIDE_RX
+endif
+ifeq ($(ENABLE_TX_WHEN_AM),1)
+	CFLAGS  += -DENABLE_TX_WHEN_AM
+endif
+ifeq ($(ENABLE_F_CAL_MENU),1)
+	CFLAGS  += -DENABLE_F_CAL_MENU
+endif
+ifeq ($(ENABLE_CTCSS_TAIL_PHASE_SHIFT),1)
+	CFLAGS  += -DENABLE_CTCSS_TAIL_PHASE_SHIFT
+endif
+ifeq ($(ENABLE_BOOT_BEEPS),1)
+	CFLAGS  += -DENABLE_BOOT_BEEPS
+endif
+ifeq ($(ENABLE_SHOW_CHARGE_LEVEL),1)
+	CFLAGS  += -DENABLE_SHOW_CHARGE_LEVEL
+endif
+ifeq ($(ENABLE_REVERSE_BAT_SYMBOL),1)
+	CFLAGS  += -DENABLE_REVERSE_BAT_SYMBOL
+endif
+ifeq ($(ENABLE_NO_CODE_SCAN_TIMEOUT),1)
+	CFLAGS += -DENABLE_NO_CODE_SCAN_TIMEOUT
+endif
+ifeq ($(ENABLE_AM_FIX),1)
+	CFLAGS  += -DENABLE_AM_FIX
+endif
+ifeq ($(ENABLE_AM_FIX_SHOW_DATA),1)
+	CFLAGS  += -DENABLE_AM_FIX_SHOW_DATA
+endif
+ifeq ($(ENABLE_SQUELCH_MORE_SENSITIVE),1)
+	CFLAGS  += -DENABLE_SQUELCH_MORE_SENSITIVE
+endif
+ifeq ($(ENABLE_FASTER_CHANNEL_SCAN),1)
+	CFLAGS  += -DENABLE_FASTER_CHANNEL_SCAN
+endif
+ifeq ($(ENABLE_BACKLIGHT_ON_RX),1)
+	CFLAGS  += -DENABLE_BACKLIGHT_ON_RX
+endif
+ifeq ($(ENABLE_RSSI_BAR),1)
+	CFLAGS  += -DENABLE_RSSI_BAR
+endif
+ifeq ($(ENABLE_AUDIO_BAR),1)
+	CFLAGS  += -DENABLE_AUDIO_BAR
+endif
+ifeq ($(ENABLE_COPY_CHAN_TO_VFO),1)
+	CFLAGS  += -DENABLE_COPY_CHAN_TO_VFO
+endif
+ifeq ($(ENABLE_SINGLE_VFO_CHAN),1)
+	CFLAGS  += -DENABLE_SINGLE_VFO_CHAN
+endif
+ifeq ($(ENABLE_BAND_SCOPE),1)
+	CFLAGS += -DENABLE_BAND_SCOPE
+endif
+ifeq ($(ENABLE_REDUCE_LOW_MID_TX_POWER),1)
+	CFLAGS  += -DENABLE_REDUCE_LOW_MID_TX_POWER
+endif
+ifeq ($(ENABLE_BYP_RAW_DEMODULATORS),1)
+	CFLAGS  += -DENABLE_BYP_RAW_DEMODULATORS
+endif
+
+ifeq ($(ENABLE_SCAN_RANGES),1)
+	CFLAGS  += -DENABLE_SCAN_RANGES
+endif
+ifeq ($(ENABLE_DTMF_CALLING),1)
+	CFLAGS  += -DENABLE_DTMF_CALLING
+endif
+ifeq ($(ENABLE_AGC_SHOW_DATA),1)
+	CFLAGS  += -DENABLE_AGC_SHOW_DATA
+endif
+ifeq ($(ENABLE_FLASHLIGHT),1)
+	CFLAGS  += -DENABLE_FLASHLIGHT
+endif
+
+LDFLAGS =
+LDFLAGS += -z noexecstack -mcpu=cortex-m0 -nostartfiles -Wl,-T,firmware.ld -Wl,--gc-sections
+
+# Use newlib-nano instead of newlib
+LDFLAGS += --specs=nano.specs
+
+ifeq ($(DEBUG),1)
+	ASFLAGS += -g
+	CFLAGS  += -g
+	LDFLAGS += -g
+endif
+
+INC =
+INC += -I $(TOP)
+INC += -I $(TOP)/external/CMSIS_5/CMSIS/Core/Include/
+INC += -I $(TOP)/external/CMSIS_5/Device/ARM/ARMCM0/Include
+
+LIBS =
+
+
+DEPS = $(OBJS:.o=.d)
+
+
+
+ifneq (, $(shell $(WHERE) python))
+    MY_PYTHON := python
+else ifneq (, $(shell $(WHERE) python3))
+    MY_PYTHON := python3
+endif
+
+ifdef MY_PYTHON
+    HAS_CRCMOD := $(shell $(MY_PYTHON) -c "import crcmod" 2>&1)
+endif
+
+full:
+	$(RM) *.bin
+	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_ENGLISH=1 ENABLE_FMRADIO=1 ENABLE_MESSENGER=1 ENABLE_MESSENGER_DELIVERY_NOTIFICATION=1 ENABLE_MESSENGER_NOTIFICATION=1 ENABLE_SPECTRUM=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_ENGLISH=1 ENABLE_DOPPLER=1 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
+	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_PINYIN=1 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_PINYIN=1 ENABLE_4732=1 ENABLE_4732SSB=1  ENABLE_SPECTRUM=1
+#中文固件，无需扩容，包含MDC1200、频谱、收音机
+#H包含多普勒模式、中文输入法、频谱、收音机、中文信道名、自定义开机中文字符、开机图片
+out:
+	$(RM) *.bin
+	$(MAKE) build
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_PINYIN=1 ENABLE_MDC1200=0 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_WARNING=0
+#不扩容
+#H版本
+
+
+all:
+	$(MAKE) build
+
+
+build:clean $(TARGET)
+	@$(OBJCOPY) -O binary $(TARGET) $(TARGET).bin
+ifndef MY_PYTHON
+	$(info )
+	$(info )
+else ifneq (,$(HAS_CRCMOD))
+	$(info )
+	$(info !!!!!!!! run: pip install crcmod)
+	$(info )
+else
+	-$(MY_PYTHON) fw-pack.py $(TARGET).bin $(AUTHOR_STRING) $(PACKED_FILE_SUFFIX).bin
+endif
+	$(SIZE) $(TARGET)
+
+
+version.o: .FORCE
+
+$(TARGET): $(OBJS)
+	@$(LD) $(LDFLAGS) $^ -o $@ $(LIBS)
+
+bsp/dp32g030/%.h: hardware/dp32g030/%.def
+
+%.o: %.c | $(BSP_HEADERS)
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+
+%.o: %.S
+	@$(AS) $(ASFLAGS) $< -o $@
+
+.FORCE:
+
+-include $(DEPS)
+
+CUSCANSHU ?= NUL
+CUSTOMNAME ?= NUL
+
+
+full_all:
+	$(MAKE) build_all $(CUSCANSHU) CUSTOMNAME="$(CUSTOMNAME)"
+
+
+build_all: clean $(TARGET)
+	$(OBJCOPY) -O binary $(TARGET) $(TARGET).bin
+ifndef MY_PYTHON
+
+else ifneq (,$(HAS_CRCMOD))
+	$(info )
+	$(info !!!!!!!! run: pip install crcmod)
+	$(info )
+else
+	-$(MY_PYTHON) fw-pack.py $(TARGET).bin $(AUTHOR_STRING) $(CUSTOMNAME).bin
+endif
+	$(SIZE) $(TARGET)
+
+
+clean:
+	@$(RM) $(call FixPath, $(TARGET).bin $(PACKED_FILE_SUFFIX).bin $(TARGET) )
+
+
+ifeq ($(OS), Windows_NT) # Windows 系统
+	@call del_win.bat
+else # 类 Unix 系统（Linux, macOS, 等）
+	chmod +x del_linux.sh
+	sh ./del_linux.sh
+endif
